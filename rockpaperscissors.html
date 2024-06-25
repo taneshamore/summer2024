@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Rock Paper Scissors game</title>
+
+    <style>
+        h1{
+            font-size: 200%;
+            font-weight: bolder;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        h2{
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .form{
+            background-color: aquamarine;
+            
+            align-items: center;
+        }
+        .input{
+            display: flex;
+            justify-content:space-between;
+            padding-left: 30%;
+            padding-right: 30%;
+            height: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .resultTable{
+            width:70%;
+        }
+        .resultTable th{
+            background-color: chocolate;
+        }
+        .resultTable td, .resultTable th{
+            height: 20px;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        #guessField{
+            width: 300px;
+            height:16px;
+            border-radius: 2px;
+            box-shadow: inset;
+        }
+    </style>
+  </head>
+
+  <div class="form">
+    <h1>Rock Paper Scissors Game</h1>
+    <h2>Confused? Can't make a decision? Play with this algorithm by choosing sides and see who wins!</h2>
+    <div class="input">
+        <label for="guessField">Enter your choice and shoot!: </label>
+        <input type="text" id="guessField" class="guessField">
+        <input type="submit" value="Shoot!" class="guessSubmit">
+    </div>
+  </div>
+  <div class="result">
+    <table class ="resultTable">
+        <tr>
+            <th>Rounds</th>
+            <th>Games</th>
+            <th>Score</th>
+        </tr>
+    </table>
+  </div>
+
+  <script>
+    const guessSubmit = document.querySelector('.guessSubmit');
+    const guessField = document.querySelector('.guessField');
+    const resultTable = document.querySelector('.resultTable');
+    let score = 0, rnd = 1;
+
+    guessSubmit.addEventListener('click', checkGuess);
+
+    
+    function getComputerChoice(){
+        let randomNum = Math.floor(Math.random()*3);
+
+        if (randomNum === 0){
+            return "Rock";
+        }
+        else if (randomNum === 1){
+            return "Paper";
+        }
+        else if (randomNum === 2){
+            return "Scissors";
+        }
+    }
+
+    function getHumanChoice(){
+        return guessField.value;
+    }
+
+    
+    function checkGuess(){
+        //get data from both players
+        let humanChoice = getHumanChoice();
+        console.log(humanChoice);
+        let computerChoice = getComputerChoice();
+        console.log(computerChoice);
+
+        
+        if (humanChoice === computerChoice){
+            score = score;
+            console.log(score)
+        }
+        else if (humanChoice === "Rock" && computerChoice === "Scissors"){
+            score = score+1;
+            console.log(score);
+        }
+        else if (humanChoice === "Scissors" && computerChoice === "Paper"){
+            score = score+1;
+            console.log(score);
+        }
+        else if (humanChoice === "Paper" && computerChoice === "Rock"){
+            score = score+1;
+            console.log(score);
+        }
+        else{
+          console.log(score);
+        }
+
+
+        //Array of games played
+        let rowData = [{round: rnd, game: String(humanChoice+" vs "+computerChoice), Score: String(score)}];
+        //console.log(rowData);
+        let tr ='<tr>';
+        tr+='<td>'+rowData[0].round+'</td>'+'<td>'+rowData[0].game+'</td>'+'<td>'+rowData[0].Score+'</td>';
+        tr+='</tr>';
+        resultTable.innerHTML += tr;
+
+
+        rnd = rnd+1;
+    }
+  </script>
